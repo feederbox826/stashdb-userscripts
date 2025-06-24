@@ -21,7 +21,7 @@
             const response = await originalFetch(resource, config);
             // response interceptor here
             const contentType = response.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") !== -1) {
+            if (contentType && (contentType.indexOf("application/json") !== -1 || contentType.indexOf("application/graphql-response+json") !== -1)) {
                 const data = await response.clone().json();
                 stashdbListener.dispatchEvent(new CustomEvent('response', { 'detail': data }));
             }
